@@ -1,20 +1,15 @@
 fun main() {
+
     fun part1(input: List<String>): Int {
 
-        //The start is 50
-        // L is left
-        // R is right
-        // if at 0 and L5 == 95    and R10 == 5
-        // everytime its at zero (count)
-
-        var currentPosition = 50
+        var currPos = 50
         var count = 0
 
         input.forEach {
-            text -> val dir = text[0]
-            val move = text.substring(1).toInt()
-            val res = rotate(dir, move, currentPosition)
-            currentPosition = res
+            val dir = it[0]
+            val move = it.substring(1).toInt()
+            val res = rotate(dir, move, currPos)
+            currPos = res
             if (res == 0) {
                 count++
             }
@@ -28,22 +23,16 @@ fun main() {
     }
 
     val inputTest = readInput("Day01")
-
     part1(inputTest).println()
 //    part2(inputTest).println()
 }
 
-fun rotate(dir: Char, move : Int, curPosition: Int) : Int {
-    var newPos = 0
-    if (dir == 'L') {
-        newPos = curPosition - move // 50 - 60
-        if (newPos < 0)
-            newPos += 100
-    }else if (dir == 'R') {
-        newPos = curPosition + move // 50 + 60
-        if (newPos > 99)
-            newPos -= 100
+fun rotate(dir: Char, move: Int, currPos: Int) : Int {
+    val newPos = if (dir == 'L') {
+        (currPos - move) % 100
+    } else{
+        (currPos + move) % 100
     }
-//    newPos.println()
+    newPos.println()
     return newPos
 }
