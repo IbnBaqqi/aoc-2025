@@ -1,21 +1,38 @@
-//fun main() {
-//    fun part1(input: List<String>): Int {
-//        return input.size
-//    }
-//
-//    fun part2(input: List<String>): Int {
-//        return input.size
-//    }
-//
-//    // Test if implementation meets criteria from the description, like:
-//    check(part1(listOf("test_input")) == 1)
-//
-//    // Or read a large test input from the `src/Day01_test.txt` file:
-//    val testInput = readInput("Day01_test")
-//    check(part1(testInput) == 1)
-//
-//    // Read the input from the `src/Day01.txt` file.
+fun main() {
+    fun part1(input: List<String>): Long {
+//         parse input
+        val ranges = input.flatMap { block ->
+            block.split(',')
+                .filter { it.isNotBlank() }
+                .map { part ->
+                    val (start, end) = part.split('-').map { it.toLong() }
+                    start..end
+                }
+        }
+
+        fun isInValid(id: Long): Boolean {
+            val s = id.toString()
+            if (s.length % 2 != 0) return false
+            val mid = s.length / 2
+            return s.take(mid) == s.substring(mid)
+        }
+
+        val invalidIds = ranges.flatMap { longs ->
+            longs.filter { isInValid(it) }
+        }
+
+        return invalidIds.sum()
+    }
+
+    fun part2(input: List<String>): Int {
+        return input.size
+    }
+
+    val input = readInput("Day02")
+    part1(input).println()
+
+//    newInput.
 //    val input = readInput("Day01")
-//    part1(input).println()
+//    part2(testInput).println()
 //    part2(input).println()
-//}
+}
